@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cam } from './Components/cam';
+import { CameraInit } from './Components/Camera';
 import { Header } from './Components/header';
 import { GlobalStyle } from './global/style/styles';
 
@@ -7,7 +7,7 @@ function App() {
   return (
     <>
     <Header />
-    <Cam/>
+    <CameraInit/>
     <GlobalStyle/>
     </>
 
