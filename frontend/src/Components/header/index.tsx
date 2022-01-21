@@ -6,8 +6,7 @@ export function Header() {
     return(
         <Container>
             <Content>
-                <img src={logoImag}/>
-                
+                <img src={logoImag}/>                
             </Content>
         </Container>
     );

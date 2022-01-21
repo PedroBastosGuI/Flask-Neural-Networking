@@ -52,9 +52,17 @@ export function CameraInit(){
 
     }
 
+
+
 useEffect(()=> {
     getVideo();
 }, [videoRef])
+
+
+
+
+useEffect(()=> {}, [])
+
     return(
         <Container>
             <Camera>
