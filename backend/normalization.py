@@ -4,7 +4,6 @@ def Normalization(dataFrame):
     from sklearn.preprocessing import MinMaxScaler
     import pandas as pd
 
-    dados = pd.read_csv(dataFrame)
     novos_dados = dados.drop(['Unnamed: 0','Unnamed: 0.1','classe','imagem'], axis=1)
 
     dados_normalizados = MinMaxScaler().fit(novos_dados)

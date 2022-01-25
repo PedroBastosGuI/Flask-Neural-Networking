@@ -10,8 +10,13 @@ function App() {
     <CameraInit/>
     <GlobalStyle/>
     </>
+);
 
-  );
 }
 
 export default App;
+
+
+
+
+

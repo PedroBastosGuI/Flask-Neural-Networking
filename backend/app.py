@@ -1,8 +1,7 @@
 import os
 from tkinter import Image
-from flask import Flask, render_template
-from reverseProxy import proxyReverse
 from flask import Flask, render_template, request
+from reverseProxy import proxyReverse
 from segmentation import Segmentation
 from PIL import Image
 import numpy as np
@@ -41,7 +40,9 @@ def classify():
 
         Segmentation(imgArray)
         
-        print(file)
+
+        
+        print(result)
         ## gerar tabelaaaaa
 
 

@@ -6,15 +6,14 @@ ButtonClose,
 
 } from './styles';
 
-
-
-
 export function CameraInit(){
 
     const videoRef = useRef(null);
     const photoRef = useRef(null);
+    const imageRef = useRef();
 
     const [hasPhoto, setHasPhoto] = useState(false);
+    const [result, setResult] = useState("");
 
     const getVideo = () => {
         navigator.mediaDevices.getUserMedia({video:{width:1920, height: 1080}})
@@ -41,6 +40,12 @@ export function CameraInit(){
         ctx.drawImage(video, 0, 0, width, height);
         setHasPhoto(true);
 
+
+        photoRef.current.toBlob((blob) => {
+            imageRef.current = blob;
+        })
+
+
     }
 
     const closePhoto = () => {
@@ -60,8 +65,29 @@ useEffect(()=> {
 
 
 
+    //verificação 
+    async function handlePostImage(){
+        takePhoto();
+        if(imageRef.current){
 
-useEffect(()=> {}, [])
+            const formatData = new FormData();
+            formatData.append('image', imageRef.current);
+            // enviando a imagem via POST 
+    
+            const resp = await fetch('/classify' , {
+                method: 'POST',
+                body: formatData,
+            });
+
+            if(resp.status === 200) {
+                const text = await resp.text();
+                console.log(text);
+            } else{
+                console.log('Error na API');
+            }
+        }
+
+    }
 
     return(
         <Container>
@@ -69,7 +95,7 @@ useEffect(()=> {}, [])
                 <Video ref={videoRef} />
                 <Button
                     onClick={takePhoto}
-                >Capture</Button>
+                >Capturar imagem</Button>
             </Camera>
 
             <Result className={'result' + (hasPhoto ? 'hasPhoto' : '')}>
@@ -77,11 +103,12 @@ useEffect(()=> {}, [])
                     ref={photoRef}
                 ></Canvas>
                 <ButtonClose
-                onClick={closePhoto}
-                >Close</ButtonClose>
+                onClick={handlePostImage}
+                >Enviar </ButtonClose>
             </Result>
-
+            <div>{result}</div>
         </Container>
 
     );
 }
+
