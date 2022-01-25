@@ -70,18 +70,17 @@ useEffect(()=> {
         takePhoto();
         if(imageRef.current){
 
-            const formatData = new FormData();
-            formatData.append('image', imageRef.current);
+            const formData = new FormData();
+            formData.append('image', imageRef.current);
             // enviando a imagem via POST 
-    
-            const resp = await fetch('/classify' , {
+            const resp = await fetch('/teste_API' , {
                 method: 'POST',
-                body: formatData,
+                body: formData,
             });
 
             if(resp.status === 200) {
-                const text = await resp.text();
-                console.log(text);
+                const json = await resp.json();
+                console.log(json);
             } else{
                 console.log('Error na API');
             }

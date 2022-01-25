@@ -10,7 +10,7 @@ def Segmentation(image):
     from skimage.feature import local_binary_pattern
     from PIL import Image
 
-    img = cv2.imread(image)
+    img = cv.imread(image)
     cropped_image = img[40:680, 40:1240]
     
     METHOD = 'default'

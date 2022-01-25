@@ -1,8 +1,14 @@
 import os
+from flask import Flask, render_template
+
+import tensorflow as tf
 from tkinter import Image
 from flask import Flask, render_template, request
-from reverseProxy import proxyReverse
+
 from segmentation import Segmentation
+from reverseProxy import proxyRequest
+from normalization import Normalization
+
 from PIL import Image
 import numpy as np
 
@@ -12,7 +18,7 @@ DEV_SERVER_URL = 'http://localhost:3000/'
 app = Flask(__name__)
 
 # Ignore static folder in development mode.
-if MODE == "  development":
+if MODE == "development":
     app = Flask(__name__, static_folder=None)
 
 @app.route('/')
@@ -26,42 +32,22 @@ def index(path=''):
 
 #criando endpoint para receber imagem que
 
-@app.route('/classify', methods=['POST'])
-
+@app.route('/teste_API', methods=['POST'])
 def classify():
     if(request.files['image']):
         file = request.files['image']
 
-        result = classifyImage(file)
-        
         imgResponse = Image.open(file.stream)
-
         imgArray = np.array(imgResponse)
 
-        Segmentation(imgArray)
-        
+        segmentation_value = Segmentation(imgArray)
+        normalization_value = Normalization(segmentation_value)
 
+        network = tf.keras.models.load_model('/content/treinamento')
+
+        result = network.predict(normalization_value)
         
         print(result)
-        ## gerar tabelaaaaa
-
-
-
-
-#recebe imagem 
-
-# retornar uma lista de imagem para
-
-#Foreach para cada item da lista 
-
-#envia para extrator 
-
-#retornar uma vector de caracteristicas
-
-#|executar inferencia
-
-#return classe 
-##############
 
 
 

@@ -1,21 +1,17 @@
-from requests import get 
+from requests import get
 
-
-def proxyReverse(host, path):
+def proxyRequest(host, path):
     response = get(host + path)
 
     excluded_headers = [
-        "content-enconding",
+        "content-encoding",
         "content-length",
         "transfer-encoding",
         "connection",
-
     ]
-
     headers = {
-        name:value
+        name: value
         for name, value in response.raw.headers.items()
         if name.lower() not in excluded_headers
     }
-
     return (response.content, response.status_code, headers)
